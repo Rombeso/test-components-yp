@@ -2,13 +2,17 @@
   "name": "sprint-1-handlebars-components",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel src/index.html --no-source-maps --no-cache",
-    "build": "parcel build src/pages/index.hbs --no-cache --public-url ./"
+    "build": "parcel build src/index.html --no-cache --public-url ./"
   },
-
+  "alias": {
+    "core": "./src/core",
+    "components": "./src/components",
+    "helpers": "./src/helpers",
+    "pages": "./src/pages"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
@@ -24,6 +28,7 @@
   },
   "dependencies": {
     "babel-core": "6.26.3",
+    "handlebars": "4.7.7",
     "nanoid": "4.0.0"
   }
 }

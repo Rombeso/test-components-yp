@@ -1,5 +1,6 @@
-import Block from '../../core/Block';
-import {validateForm, ValidateType} from "../../helpers/validateForm";
+import Block from 'core/Block';
+import {validateForm, ValidateType} from "helpers/validateForm";
+
 
 export class LoginPage extends Block {
     constructor() {
@@ -8,9 +9,21 @@ export class LoginPage extends Block {
             error: '',
             loginValue: '',
             passwordValue: '',
+            onInput: (e) => {
+                const inputEl = e.target as HTMLInputElement
+                const errorMassage = validateForm(
+                    [{type: ValidateType.Login, value: inputEl.value}]
+                )
+
+                this.refs.loginInputRef.refs.errorRef.setProps({text: errorMassage});
+            },
+            onFocus: () => console.log('focus'),
+            onBlur: () => console.log('blur'),
             onSubmit: () => {
                 const loginEl = this.element?.querySelector('input[name="login"]') as HTMLInputElement;
                 const passwordEl = this.element?.querySelector('input[name="password"]') as HTMLInputElement;
+
+                const loginRef = this.refs.loginInpur
 
                 const errorMassage = validateForm(
                     [{type: ValidateType.Login, value: loginEl.value},
@@ -37,24 +50,21 @@ export class LoginPage extends Block {
     }
 
     render() {
+
+        // console.log(this.refs)
+
         // language=hbs
         return `
             <div class="screen screen_theme_full">
                 <div class="screen__content">
-                    {{{Input
+                    {{{ControlledInput
+                            ref="loginInputRef"
+                            onInput=onInput
+                            onFocus=onFocus
                             type="text"
                             name="login"
                             placeholder="Your login"
-                            value="${this.props.loginValue}"
                             label="Login"
-
-                    }}}
-                    {{{Input
-                            type="password"
-                            name="password"
-                            placeholder="Your password"
-                            value="${this.props.passwordValue}"
-                            label="Password"
                     }}}
                     {{#if error}}{{error}}{{/if}}
                     {{{Button text="Login" onClick=onSubmit}}}
@@ -63,3 +73,21 @@ export class LoginPage extends Block {
         `;
     }
 }
+
+// {{{ControlledInput
+//     type="text"
+//     name="login"
+//     placeholder="Your login"
+//     value="${this.props.loginValue}"
+//     label="Login"
+//     ref="loginInpur"
+//
+// }}}
+// {{{ControlledInput
+//     type="password"
+//     name="password"
+//     placeholder="Your password"
+//     value="${this.props.passwordValue}"
+//     label="Password"
+//     ref="passwordInpur"
+// }}}
